@@ -1,38 +1,44 @@
 package ru.javarush.akursekova.cryptoanalyser;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import static ru.javarush.akursekova.cryptoanalyser.Alphabet.ALPHABET;
+import static ru.javarush.akursekova.cryptoanalyser.DecryptByBruteForce.decryptByBruteForce;
+import static ru.javarush.akursekova.cryptoanalyser.DecryptByStatAnalysis.decryptByStat;
 
 
 //-inputpath=C:\Users\Image1\Desktop\ALINA\TEST\file.txt -outputpath=C:\Users\Image1\Desktop\ALINA\TEST\result.txt -shift=20
 
 public class Main {
 
-    private static final List<Character> ALPHABET = Arrays.asList('a', 'b', 'c',
-            'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',  'o', 'p', 'q', 'r', 's', 't',
-            'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '\'', ':', '!', '?', ' ');
 
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(args));
 
-//        final List<Character> ALPHABET = Arrays.asList('а', 'б', 'в',
+    //TODO to add more input arguments to command line and corresponding validations
+    //TODO to move all input variables to CONST
+    //-textToEncrypt
+    //-encryptedText
+    //-shift
+    //-textForAnalysis
+    //-decryptedWithShift
+    //-decryptedWithBruteForce
+    //-decriptedWithStatAnalysis
+
+//    private static final String WORKING_DIR_ARG = "-workingdir";
+//    private static final String ARG_VALUE_SEPARATOR = "=";
+
+
+    //        final List<Character> ALPHABET = Arrays.asList('а', 'б', 'в',
 //                'г', 'д', 'е', 'ж', 'з', 'и', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у',
 //                'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'я', '.', ',', '«', '»',
 //                ':', '!', '?', ' ');
 
-//        final List<Character> ALPHABET = Arrays.asList('a', 'b', 'c',
-//                'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p', 'q', 'r', 's', 't',
-//                'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '\'', ':', '!', '?', ' ');
+    public static void main(String[] args) {
+        //System.out.println(Arrays.toString(args));
 
         if (args.length != 3 || !args[0].startsWith("-inputpath")
                || !args[1].startsWith("-outputpath") || !args[2].startsWith("-shift")){
@@ -153,105 +159,32 @@ public class Main {
             System.exit(13);
         }
         //TODO work with not absolute path!
-
-        //encryptFile(inputPath, outputPath, shift);
-
         //TODO outputPath for descryptFile method was not added to command line args.To add and support all validations.
-        decryptFile(inputPath, outputPath, shift);
+        //TODO how is better to organise methods/class
+        //TODO to check that all catch have clear error messages
+
+        //TextEncryptor.encryptText(inputPath, outputPath, shift);
+        //DecryptByShift.decryptText(inputPath, outputPath, shift);
+
+
+        //temporal variables -> will be moved to args[]
+//        Path textToDecrypt = Path.of("C:\\Users\\Image1\\Desktop\\ALINA\\TEST\\result.txt");
+        Path textToDecrypt = Path.of("C:\\Users\\Image1\\Desktop\\ALINA\\TEST\\Test\\result.txt");
+        Path textToAnalise = Path.of("C:\\Users\\Image1\\Desktop\\ALINA\\TEST\\Test\\example.txt");
+        Path decryptedText = Path.of("C:\\Users\\Image1\\Desktop\\ALINA\\TEST\\Test\\result1.txt");
+//        DecryptByBruteForce.decryptByBruteForce(textToDecrypt, textToAnalise, decryptedText);
+        DecryptByStatAnalysis.decryptByStat(textToDecrypt, textToAnalise, decryptedText);
+
+
 
     }
 
-    public static void encryptFile(Path inPath, Path outPath, int shift){
-        try(FileChannel reader = FileChannel.open(inPath);
-            FileChannel writer = FileChannel.open(outPath, StandardOpenOption.WRITE)
-        ){
-            ByteBuffer buffer = ByteBuffer.allocate(64);
-            int readBytes = reader.read(buffer);
-
-            while (readBytes != -1){
-                buffer.flip();
-                for (int i = 0; i < buffer.limit(); i++) {
-
-                    char charBeforeEncrypt = (char) buffer.get(i);
-                    if (Character.isUpperCase(charBeforeEncrypt)){
-                        charBeforeEncrypt = Character.toLowerCase(charBeforeEncrypt);
-                    }
-
-                    int indCharToEncrypt = ALPHABET.indexOf(charBeforeEncrypt);
-                    if (indCharToEncrypt == -1){
-                        continue;
-                    }
-                    int indWithShift = indCharToEncrypt + shift;
-                    if (indWithShift > ALPHABET.size() - 1){
-                        indWithShift = indWithShift - (ALPHABET.size() - 1) - 1;
-                    }
-
-                    char charAfterEncrypt = ALPHABET.get(indWithShift);
-                    buffer.put(i, (byte) charAfterEncrypt);
 
 
-//                    System.out.println("----------------------------------------");
-//                    System.out.println("charBeforeEncrypt = "+charBeforeEncrypt);
-//                    System.out.println("indCharToEncrypt = "+indCharToEncrypt);
-//                    System.out.println("indWithShift = "+ indWithShift);
-//                    System.out.println("charAfterEncrypt = " + charAfterEncrypt);
-//                    System.out.println("char after encryption taken from buffer= "+ (char) buffer.get(i));
-//                    System.out.println("----------------------------------------");
-                }
-                writer.write(buffer);
-                buffer.clear();
-                readBytes = reader.read(buffer);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void decryptFile(Path inPath, Path outPath, int shift){
-        try(FileChannel reader = FileChannel.open(inPath);
-            FileChannel writer = FileChannel.open(outPath, StandardOpenOption.WRITE)
-        ){
-            ByteBuffer buffer = ByteBuffer.allocate(64);
-            int readBytes = reader.read(buffer);
-
-            while (readBytes != -1){
-                buffer.flip();
-                for (int i = 0; i < buffer.limit(); i++) {
-
-                    char charBeforeDecrypt = (char) buffer.get(i);
-                    if (Character.isUpperCase(charBeforeDecrypt)){
-                        charBeforeDecrypt = Character.toLowerCase(charBeforeDecrypt);
-                    }
-
-                    int indCharToDecrypt = ALPHABET.indexOf(charBeforeDecrypt);
-                    if (indCharToDecrypt == -1){
-                        continue;
-                    }
-                    int indWithShift = indCharToDecrypt - shift;
-                    if (indWithShift < 0){
-                        indWithShift = (ALPHABET.size() - 1) - (shift - indCharToDecrypt) + 1;
-                    }
-
-                    char charAfterDecrypt = ALPHABET.get(indWithShift);
-                    buffer.put(i, (byte) charAfterDecrypt);
 
 
-//                    System.out.println("----------------------------------------");
-//                    System.out.println("charBeforeDecrypt = "+charBeforeDecrypt);
-//                    System.out.println("indCharToDecrypt = "+indCharToDecrypt);
-//                    System.out.println("indWithShift = "+ indWithShift);
-//                    System.out.println("charAfterDecrypt = " + charAfterDecrypt);
-//                    System.out.println("char after decryption taken from buffer= "+ (char) buffer.get(i));
-//                    System.out.println("----------------------------------------");
-                }
-                writer.write(buffer);
-                buffer.clear();
-                readBytes = reader.read(buffer);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
+
+
 
 }
