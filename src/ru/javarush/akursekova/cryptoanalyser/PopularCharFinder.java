@@ -8,10 +8,9 @@ public class PopularCharFinder {
         int maxFrequency = Integer.MIN_VALUE;
 
         for(Map.Entry<Character, Integer> entry: map.entrySet()) {
-            // get key
             Character key = entry.getKey();
-            // get value
             Integer value = entry.getValue();
+
             if (value > maxFrequency){
                 maxFrequency = value;
                 popularChar = key;

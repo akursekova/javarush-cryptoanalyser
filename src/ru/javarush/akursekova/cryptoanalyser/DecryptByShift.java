@@ -1,58 +1,56 @@
 package ru.javarush.akursekova.cryptoanalyser;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 import static ru.javarush.akursekova.cryptoanalyser.Alphabet.ALPHABET;
 
 public class DecryptByShift {
-    public static void decryptText(Path textToDecrypt, Path decryptedText, int shift){
-        try(FileChannel reader = FileChannel.open(textToDecrypt);
-            FileChannel writer = FileChannel.open(decryptedText, StandardOpenOption.WRITE)
-        ){
-            ByteBuffer buffer = ByteBuffer.allocate(64);
-            int readBytes = reader.read(buffer);
+    public static void decryptText(InputDataParser inputDataParser) {
 
-            while (readBytes != -1){
-                buffer.flip();
-                for (int i = 0; i < buffer.limit(); i++) {
-
-                    char charBeforeDecrypt = (char) buffer.get(i);
-                    if (Character.isUpperCase(charBeforeDecrypt)){
-                        charBeforeDecrypt = Character.toLowerCase(charBeforeDecrypt);
-                    }
-
-                    int indCharToDecrypt = ALPHABET.indexOf(charBeforeDecrypt);
-                    if (indCharToDecrypt == -1){
-                        continue;
-                    }
-                    int indWithShift = indCharToDecrypt - shift;
-                    if (indWithShift < 0){
-                        indWithShift = (ALPHABET.size() - 1) - (shift - indCharToDecrypt) + 1;
-                    }
-
-                    char charAfterDecrypt = ALPHABET.get(indWithShift);
-                    buffer.put(i, (byte) charAfterDecrypt);
+        Path inputPath = inputDataParser.getInputPath();
+        Path outputPath = inputDataParser.getOutputPath();
+        int shift = inputDataParser.getShift();
 
 
-//                    System.out.println("----------------------------------------");
-//                    System.out.println("charBeforeDecrypt = "+charBeforeDecrypt);
-//                    System.out.println("indCharToDecrypt = "+indCharToDecrypt);
-//                    System.out.println("indWithShift = "+ indWithShift);
-//                    System.out.println("charAfterDecrypt = " + charAfterDecrypt);
-//                    System.out.println("char after decryption taken from buffer= "+ (char) buffer.get(i));
-//                    System.out.println("----------------------------------------");
+        try (FileReader input = new FileReader(inputPath.toFile());
+             FileWriter output = new FileWriter(outputPath.toFile())
+        ) {
+
+            int readBytes;
+
+            while ((readBytes = input.read()) != -1) {
+
+
+                char charBeforeDecrypt = (char) readBytes;
+                if (Character.isUpperCase(charBeforeDecrypt)) {
+                    charBeforeDecrypt = Character.toLowerCase(charBeforeDecrypt);
                 }
-                writer.write(buffer);
-                buffer.clear();
-                readBytes = reader.read(buffer);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
+                int indCharToDecrypt = ALPHABET.indexOf(charBeforeDecrypt);
+                if (indCharToDecrypt == -1) {
+                    output.write(charBeforeDecrypt);
+                    continue;
+                }
+                int indWithShift = indCharToDecrypt - shift;
+                if (indWithShift < 0) {
+                    indWithShift = (ALPHABET.size() - 1) - (shift - indCharToDecrypt) + 1;
+                }
+                char charAfterDecrypt = ALPHABET.get(indWithShift);
+
+                output.write(charAfterDecrypt);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("There was a problem while trying to access a file which is not available. ");
+            System.err.println("Error details: " + e.getMessage());
+            System.exit(3);
+        } catch (IOException e) {
+            System.err.println("There was a problem while working with Input and Output operations");
+            System.err.println("Error details: " + e.getMessage());
+            System.exit(3);
+        }
     }
 }

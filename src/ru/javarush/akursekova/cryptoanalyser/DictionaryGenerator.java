@@ -9,9 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DictionaryGenerator {
-    public static /*Map<String, Integer>*/ Set<String> generateDictionary(Path textToAnalyse){
+    public static Set<String> generateDictionary(Path textToAnalyse){
 
-        //Map<String, Integer> wordCounterMap = new TreeMap<>();
         Set<String> wordsDictionary = new HashSet<>();
 
         try(FileReader fileReader = new FileReader(textToAnalyse.toFile());
@@ -23,22 +22,13 @@ public class DictionaryGenerator {
                 if (stringToAnalyze.equals("")){
                     continue;
                 }
-                String[] lineToStringArray = stringToAnalyze.split("\\W");
+                String[] lineToStringArray = stringToAnalyze.split("[^A-Za-zА-Яа-я]+");
 
                 for (int i = 0; i < lineToStringArray.length; i++) {
                     String wordToAnalyze  = lineToStringArray[i].toLowerCase();
                     if (wordToAnalyze.equals("")){
                         continue;
                     }
-
-//                    if (!wordCounterMap.containsKey(wordToAnalyze)){
-//                        wordCounterMap.put(wordToAnalyze,1);
-//                    } else {
-//                        int oldWordFrequency = wordCounterMap.get(wordToAnalyze);
-//                        int newWordFrequency = oldWordFrequency + 1;
-//                        wordCounterMap.put(wordToAnalyze, newWordFrequency);
-//                    }
-
                     if (!wordsDictionary.contains(wordToAnalyze)){
                         wordsDictionary.add(wordToAnalyze);
                     }
@@ -46,12 +36,15 @@ public class DictionaryGenerator {
             }
 
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.err.println("There was a problem while trying to access a file which is not available. ");
+            System.err.println("Error details: " + e.getMessage());
+            System.exit(3);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("There was a problem while working with Input and Output operations");
+            System.err.println("Error details: " + e.getMessage());
+            System.exit(3);
         }
 
-        //return wordCounterMap;
         return wordsDictionary;
     }
 }
