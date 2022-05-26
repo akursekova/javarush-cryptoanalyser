@@ -1,19 +1,18 @@
-package ru.javarush.akursekova.cryptoanalyser;
+package ru.javarush.akursekova.cryptoanalyser.DecryptBruteForce;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DictionaryGenerator {
-    public static Set<String> generateDictionary(Path textToAnalyse){
+    public static Set<String> generateDictionary(String textToAnalysePath){
 
         Set<String> wordsDictionary = new HashSet<>();
 
-        try(FileReader fileReader = new FileReader(textToAnalyse.toFile());
+        try(FileReader fileReader = new FileReader(textToAnalysePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
 
@@ -36,13 +35,9 @@ public class DictionaryGenerator {
             }
 
         } catch (FileNotFoundException e) {
-            System.err.println("There was a problem while trying to access a file which is not available. ");
-            System.err.println("Error details: " + e.getMessage());
-            System.exit(3);
+            throw new RuntimeException("There was a problem while trying to access a file which is not available.", e);
         } catch (IOException e) {
-            System.err.println("There was a problem while working with Input and Output operations");
-            System.err.println("Error details: " + e.getMessage());
-            System.exit(3);
+            throw new RuntimeException("There was a problem while working with Input/Output operations", e);
         }
 
         return wordsDictionary;

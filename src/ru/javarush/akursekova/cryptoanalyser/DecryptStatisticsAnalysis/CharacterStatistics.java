@@ -1,34 +1,33 @@
-package ru.javarush.akursekova.cryptoanalyser;
+package ru.javarush.akursekova.cryptoanalyser.DecryptStatisticsAnalysis;
 
+import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.javarush.akursekova.cryptoanalyser.Alphabet.ALPHABET;
-
 public class CharacterStatistics {
-    public static Map<Character, Integer> generateCharStats(Path textToAnalyse){
+    public static Map<Character, Integer> generateCharStats(String textToAnalyse){
 
         Map<Character, Integer> charStatsMap = new HashMap<>();
+        int totalBytesRead = 0;
         int frequencyInPercent;
 
-        try(FileChannel fileChannel = FileChannel.open(textToAnalyse)){
-            ByteBuffer buffer = ByteBuffer.allocate(1000);
+        try(FileReader input = new FileReader(textToAnalyse)) {
+            int readBytes;
 
-            fileChannel.read(buffer);
-            buffer.flip();
 
-            for (int i = 0; i < buffer.limit(); i++) {
-                char charToAnalyse = (char) buffer.get(i);
+            while ((readBytes = input.read()) != -1 && totalBytesRead != 1000){
+                char charToAnalyse = (char) readBytes;
 
                 if (Character.isUpperCase(charToAnalyse)){
                     charToAnalyse = Character.toLowerCase(charToAnalyse);
                 }
 
-                if (!ALPHABET.contains(charToAnalyse)){
+                if (!Alphabet.getInstance().contains(charToAnalyse)){
                     continue;
                 }
                 if (!charStatsMap.containsKey(charToAnalyse)){
@@ -38,19 +37,19 @@ public class CharacterStatistics {
                     int newChartCount = oldCharCount + 1;
                     charStatsMap.put(charToAnalyse, newChartCount);
                 }
+                totalBytesRead++;
             }
-            buffer.clear();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("There was a problem while trying to access a file which is not available.", e);
         } catch (IOException e) {
-            System.err.println("There was a problem while working with Input and Output operations");
-            System.err.println("Error details: " + e.getMessage());
-            System.exit(3);
+            throw new RuntimeException("There was a problem while working with Input/Output operations", e);
         }
 
         for(Map.Entry<Character, Integer> entry: charStatsMap.entrySet()) {
             Character key = entry.getKey();
             Integer value = entry.getValue();
 
-            frequencyInPercent = (value*100)/1000;
+            frequencyInPercent = Math.round((value*100)/totalBytesRead);
 
             charStatsMap.put(key,frequencyInPercent);
         }

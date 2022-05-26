@@ -1,18 +1,19 @@
-package ru.javarush.akursekova.cryptoanalyser;
+package ru.javarush.akursekova.cryptoanalyser.DecryptBruteForce;
 
-import java.nio.file.Path;
+import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.DecryptShift.DecryptShift;
+import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static ru.javarush.akursekova.cryptoanalyser.Alphabet.ALPHABET;
-
-public class DecryptByBruteForce {
+public class DecryptBruteForce {
     public static void decryptByBruteForce(InputDataParser inputDataParser){
 
-        Path textToAnalyse = inputDataParser.getExampleTextPath();
-        Path outputText = inputDataParser.getOutputPath();
+        String textToAnalyse = inputDataParser.getExampleText();
+        String outputText = inputDataParser.getOutput();
 
         Set<String> exampleTextDictionary = DictionaryGenerator.generateDictionary(textToAnalyse);
         Set<String> decryptedTextDictionary;
@@ -22,11 +23,12 @@ public class DecryptByBruteForce {
         int wordsInBothSets = 0;
         int maxWordsInBothSets = Integer.MIN_VALUE;
 
-        for (int i = 1; i < ALPHABET.size(); i++) {
+
+        for (int i = 1; i < Alphabet.getInstance().size(); i++) {
             int shiftToTry = i;
 
             inputDataParser.setShift(shiftToTry);
-            DecryptByShift.decryptText(inputDataParser);
+            DecryptShift.decryptText(inputDataParser);
 
             decryptedTextDictionary = DictionaryGenerator.generateDictionary(outputText);
 
@@ -49,7 +51,7 @@ public class DecryptByBruteForce {
 
         int correctShift = numOfWordsInBothSets.indexOf(maxWordsInBothSets) + 1;
         inputDataParser.setShift(correctShift);
-        DecryptByShift.decryptText(inputDataParser);
+        DecryptShift.decryptText(inputDataParser);
 
 
     }

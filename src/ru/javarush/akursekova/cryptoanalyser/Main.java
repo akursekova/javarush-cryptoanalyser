@@ -6,15 +6,19 @@ decryptWithShift -input=Test\input2.txt -output=Test\result2.txt -shift=15
 decryptWithShift -input=Test\testoutput.txt -output=Test\testoutput-dec.txt -shift=15
 decryptWithBruteForce -input=Test\input3.txt -output=Test\result3.txt -textToAnalise=Test\toAnalise.txt
 decryptWithStatAnalysis -input=Test\input4.txt -output=Test\result4.txt -textToAnalise=Test\toAnalise.txt
+decryptWithStatAnalysis -input=TEST\Manualtext\input4.txt -output=TEST\Manualtext\result4.txt -textToAnalise=TEST\Manualtext\textToAnalyse.txt
  */
 
 
-import static ru.javarush.akursekova.cryptoanalyser.InputDataValidator.validateInputData;
+import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
+
+import static ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataValidator.validateInputData;
+import static ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.OperationProcessor.processOperation;
 
 public class Main {
 
     public static void main(String[] args) {
         validateInputData(args);
-        ProgramRunner.runProgram(InputDataParser.parser(args));
+        processOperation(InputDataParser.parser(args));
     }
 }
