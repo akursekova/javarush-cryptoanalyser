@@ -1,4 +1,4 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptStatisticsAnalysis;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis;
 
 import java.util.Map;
 

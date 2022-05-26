@@ -1,9 +1,8 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptBruteForce;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_brute_force;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
-import ru.javarush.akursekova.cryptoanalyser.DecryptShift.DecryptShift;
-import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
-
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.decrypt_shift.DecryptShift;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +51,5 @@ public class DecryptBruteForce {
         int correctShift = numOfWordsInBothSets.indexOf(maxWordsInBothSets) + 1;
         inputDataParser.setShift(correctShift);
         DecryptShift.decryptText(inputDataParser);
-
-
     }
 }

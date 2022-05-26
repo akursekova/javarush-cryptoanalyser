@@ -1,4 +1,4 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptBruteForce;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_brute_force;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

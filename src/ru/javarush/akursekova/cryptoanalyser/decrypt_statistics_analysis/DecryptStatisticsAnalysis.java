@@ -1,9 +1,8 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptStatisticsAnalysis;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
-import ru.javarush.akursekova.cryptoanalyser.DecryptShift.DecryptShift;
-import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
-
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.decrypt_shift.DecryptShift;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
 import java.util.Map;
 
 public class DecryptStatisticsAnalysis {

@@ -1,6 +1,6 @@
-package ru.javarush.akursekova.cryptoanalyser.InputDataProcessor;
+package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,9 +34,9 @@ public class InputDataValidator {
 
         if (("decryptWithBruteForce".equals(args[0]) || "decryptWithStatAnalysis".equals(args[0]))
                 && (args.length != 4 || !args[1].startsWith("-input")
-                || !args[2].startsWith("-output") || !args[3].startsWith("-textToAnalise"))){
+                || !args[2].startsWith("-output") || !args[3].startsWith("-textToAnalyse"))){
             System.err.println("Some of your parameters is missing! " +
-                    "\nYou must specify parameters '-input','-output' and '-textToAnalise' with a path.");
+                    "\nYou must specify parameters '-input','-output' and '-textToAnalyse' with a path.");
             System.exit(2);
         }
 
@@ -123,7 +123,7 @@ public class InputDataValidator {
             System.exit(9);
         }
 
-        if ("-input".equals(pathKeyAndValue[0]) || "-textToAnalise".equals(pathKeyAndValue[0])){
+        if ("-input".equals(pathKeyAndValue[0]) || "-textToAnalyse".equals(pathKeyAndValue[0])){
             try {
                 if (Files.size(path) == 0){
                     System.err.println("The size of the file by the path "

@@ -1,11 +1,9 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptStatisticsAnalysis;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
-
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package ru.javarush.akursekova.cryptoanalyser.InputDataProcessor;
+package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
 public class InputDataParser {
     private final String operation;

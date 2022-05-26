@@ -1,8 +1,7 @@
-package ru.javarush.akursekova.cryptoanalyser.DecryptShift;
+package ru.javarush.akursekova.cryptoanalyser.decrypt_shift;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
-import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
-
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;

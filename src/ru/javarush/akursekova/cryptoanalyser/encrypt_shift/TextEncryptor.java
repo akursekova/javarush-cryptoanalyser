@@ -1,8 +1,9 @@
-package ru.javarush.akursekova.cryptoanalyser.EncryptShift;
+package ru.javarush.akursekova.cryptoanalyser.encrypt_shift;
 
-import ru.javarush.akursekova.cryptoanalyser.Alphabet.Alphabet;
-import ru.javarush.akursekova.cryptoanalyser.InputDataProcessor.InputDataParser;
+import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
 import java.io.*;
+import java.nio.charset.Charset;
 
 
 public class TextEncryptor {
@@ -13,8 +14,8 @@ public class TextEncryptor {
         int shift = inputDataParser.getShift();
 
 
-        try(FileReader input = new FileReader(inputPath);
-            FileWriter output = new FileWriter(outputPath)
+        try(FileReader input = new FileReader(inputPath, Charset.defaultCharset());
+            FileWriter output = new FileWriter(outputPath, Charset.defaultCharset())
         ) {
 
             int readBytes;

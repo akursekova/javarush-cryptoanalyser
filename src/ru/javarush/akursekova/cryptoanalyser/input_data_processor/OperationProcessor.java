@@ -1,9 +1,9 @@
-package ru.javarush.akursekova.cryptoanalyser.InputDataProcessor;
+package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
-import ru.javarush.akursekova.cryptoanalyser.DecryptBruteForce.DecryptBruteForce;
-import ru.javarush.akursekova.cryptoanalyser.DecryptShift.DecryptShift;
-import ru.javarush.akursekova.cryptoanalyser.DecryptStatisticsAnalysis.DecryptStatisticsAnalysis;
-import ru.javarush.akursekova.cryptoanalyser.EncryptShift.TextEncryptor;
+import ru.javarush.akursekova.cryptoanalyser.decrypt_brute_force.DecryptBruteForce;
+import ru.javarush.akursekova.cryptoanalyser.decrypt_shift.DecryptShift;
+import ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis.DecryptStatisticsAnalysis;
+import ru.javarush.akursekova.cryptoanalyser.encrypt_shift.TextEncryptor;
 
 import java.nio.file.Path;
 
