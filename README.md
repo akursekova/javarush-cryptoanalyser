@@ -29,8 +29,6 @@ https://javarush-team.notion.site/javarush-team/Road-map-f0135a266781448081f7978
 `-output` - путь к файлу, в котором будет храниться зашифрованный текст  
 `-shift` - номер сдвига
 
-**Пример:**  
->encrypt -input=Test\input1.txt -output=Test\result1.txt -shift=7
 
 ***
 
@@ -42,8 +40,6 @@ https://javarush-team.notion.site/javarush-team/Road-map-f0135a266781448081f7978
 `-output` - путь к файлу, в котором будет храниться расшифрованный текст
 `-shift` - номер сдвига
 
-**Пример:**
->decryptWithShift -input=Test\input2.txt -output=Test\result2.txt -shift=7
 
 ***
 
@@ -55,8 +51,6 @@ https://javarush-team.notion.site/javarush-team/Road-map-f0135a266781448081f7978
 `-output` - путь к файлу, в котором будет храниться расшифрованный текст
 `-textToAnalyse` - путь к файлу с текстом для анализа
 
-**Пример:**
->decryptWithBruteForce -input=Test\input3.txt -output=Test\result3.txt -textToAnalyse=Test\toAnalyse.txt
 
 ***
 
@@ -68,8 +62,6 @@ https://javarush-team.notion.site/javarush-team/Road-map-f0135a266781448081f7978
 `-output` - путь к файлу, где будет храниться расшифрованный текст
 `-textToAnalyse` - путь к файлу для анализа 
 
-**Пример:**
->decryptWithStatAnalysis -input=Test\input4.txt -output=Test\result4.txt -textToAnalyse=Test\toAnalyse.txt
 
 # Запуск проекта:
 
@@ -147,28 +139,27 @@ _Текстовые файлы, используемые для работы с 
 
 **Шифровка текста по заданному сдвигу:**
 
-Пример запроса, когда файлы и .jar находятся в одной папке:
+* Пример запроса, когда файлы и .jar находятся в одной папке:
 
 >java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar encrypt -input=input1.txt -output=result1.txt -shift=20
 
-Пример запроса, когда файлы и .jar находятся в разных папках:
+* Пример запроса, когда файлы и .jar находятся в разных папках:
+>java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar encrypt -input=C:\Users\Image1\Desktop\Text\chekhov\input1.txt -output=C:\Users\Image1\Desktop\Text\chekhov\result1.txt -shift=20
 
-Пример ответа:
+* Пример ответа:
 >Encryption completed successfully.
 Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result1.txt
 
-_Далее, для удобства чтеня будут приведены только примеры запроса, когда файлы и .jar находятся в одной папке._
-
->java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar encrypt -input=C:\Users\Image1\Desktop\Text\chekhov\input1.txt -output=C:\Users\Image1\Desktop\Text\chekhov\result1.txt -shift=20
+_Далее, для удобства чтения будут приведены только примеры запросов, когда файлы и .jar находятся в одной папке._
 
 ***
 
 **Расшифровка текста по заданному сдвигу:**
 
-Пример запроса:
+* Пример запроса:
 >java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar decryptWithShift -input=input.txt -output=result2.txt -shift=20
 
-Пример ответа:
+* Пример ответа:
 >Decryption completed successfully.
 Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result2.txt
 
@@ -176,10 +167,10 @@ Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result2.txt
 
 **Расшифровка текста методом brute force:**
 
-Пример запроса:
+* Пример запроса:
 >java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar decryptWithBruteForce -input=input.txt -output=result3.txt -textToAnalyse=textToAnalyse.txt
 
-Пример ответа:
+* Пример ответа:
 >Decryption by Brute Force method completed successfully.
 Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result3.txt
 
@@ -187,9 +178,9 @@ Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result3.txt
 
 **Расшифровка текста методом статистического анализа текста:**
 
-Пример запроса:
+* Пример запроса:
 >java -Dfile.encoding=UTF-8 -jar ./my-main-v-0.0.1.jar decryptWithStatAnalysis -input=input.txt -output=result4.txt -textToAnalyse=textToAnalyse.txt
 
-Пример ответа:
+* Пример ответа:
 >Decryption by Statistics Analysis method completed successfully.
 Please check results here: C:\Users\Image1\Desktop\Text\chekhov\result4.txt
