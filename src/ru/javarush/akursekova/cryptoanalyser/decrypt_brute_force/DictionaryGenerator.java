@@ -1,5 +1,7 @@
 package ru.javarush.akursekova.cryptoanalyser.decrypt_brute_force;
 
+import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -35,9 +37,9 @@ public class DictionaryGenerator {
             }
 
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
         } catch (IOException e) {
-            throw new RuntimeException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
         }
 
         return wordsDictionary;

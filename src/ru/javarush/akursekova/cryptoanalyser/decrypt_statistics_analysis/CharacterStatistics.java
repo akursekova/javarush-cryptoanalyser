@@ -1,6 +1,8 @@
 package ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis;
 
 import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,9 +40,9 @@ public class CharacterStatistics {
                 totalBytesRead++;
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
         } catch (IOException e) {
-            throw new RuntimeException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
         }
 
         for(Map.Entry<Character, Integer> entry: charStatsMap.entrySet()) {

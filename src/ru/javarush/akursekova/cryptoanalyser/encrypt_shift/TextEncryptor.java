@@ -1,6 +1,7 @@
 package ru.javarush.akursekova.cryptoanalyser.encrypt_shift;
 
 import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
 import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -40,9 +41,9 @@ public class TextEncryptor {
                     output.write(charAfterEncrypt);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
         } catch (IOException e) {
-            throw new RuntimeException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
         }
     }
 }

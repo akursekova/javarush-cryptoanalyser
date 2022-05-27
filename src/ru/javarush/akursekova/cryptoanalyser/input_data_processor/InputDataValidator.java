@@ -1,6 +1,7 @@
 package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
 import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
+import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +21,7 @@ public class InputDataValidator {
                     "'decryptWithShift' for text decryption using a shift\n" +
                     "'decryptWithBruteForce' for text decryption using Brute Force method\n" +
                     "'decryptWithStatAnalysis' for text decryption using statistics analysis");
-            System.exit(0);
+            System.exit(1);
         }
 
         if (("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0]))
@@ -29,7 +30,7 @@ public class InputDataValidator {
             System.err.println("Some of your parameters is missing! " +
                     "\nYou must specify parameters '-input' and '-output' with a path " +
                     "and parameter '-shift' with some rotation.");
-            System.exit(1);
+            System.exit(2);
         }
 
         if (("decryptWithBruteForce".equals(args[0]) || "decryptWithStatAnalysis".equals(args[0]))
@@ -37,7 +38,7 @@ public class InputDataValidator {
                 || !args[2].startsWith("-output") || !args[3].startsWith("-textToAnalyse"))){
             System.err.println("Some of your parameters is missing! " +
                     "\nYou must specify parameters '-input','-output' and '-textToAnalyse' with a path.");
-            System.exit(2);
+            System.exit(3);
         }
 
         validateArgFormat(args[1]);
@@ -69,7 +70,7 @@ public class InputDataValidator {
                     + "' with next format: "
                     + argKeyAndValue[0]
                     + "={value}");
-            System.exit(3);
+            System.exit(4);
         }
 
     }
@@ -81,16 +82,15 @@ public class InputDataValidator {
         } catch (NumberFormatException ex){
             System.err.println("Shift is invalid: " + shiftValue[1] + ". Please, provide integer value.");
             System.err.println("Error details: " + ex.getMessage());
-            System.exit(4);
+            System.exit(5);
         }
 
         int shift = Integer.parseInt(shiftValue[1]);
         final int MAX_SHIFT = Alphabet.getInstance().size()-1;
-        if (shift == 0 || shift == Alphabet.getInstance().size()){
+        if (shift == 0 || shift >= Alphabet.getInstance().size()){
             System.err.println("Shift is invalid: " + shiftValue[1]
-                    + ". \nThe text will not be encrypted/decrypted if the shift equals to 0 or " + Alphabet.getInstance().size()
                     + ". \nPlease, provide shift value which will be in the range of [1, " + MAX_SHIFT + "].");
-            System.exit(5);
+            System.exit(6);
         }
     }
 
@@ -101,7 +101,7 @@ public class InputDataValidator {
         try{
             path = Path.of(pathKeyAndValue[1]);
         } catch (InvalidPathException ex){
-            throw new RuntimeException("Path specified in '" + pathKeyAndValue[0] + "' is invalid: " + pathKeyAndValue[1], ex);
+            throw new FileProcessingException("Path specified in '" + pathKeyAndValue[0] + "' is invalid: " + pathKeyAndValue[1], ex);
         }
 
         if (Files.isDirectory(path)) {
@@ -132,7 +132,7 @@ public class InputDataValidator {
                     System.exit(10);
                 }
             } catch (IOException e) {
-                throw new RuntimeException("There was a problem while processing size of the file provided in '" + pathKeyAndValue[0] + "'.", e);
+                throw new FileProcessingException("There was a problem while processing size of the file provided in '" + pathKeyAndValue[0] + "'.", e);
             }
         }
     }
@@ -149,10 +149,10 @@ public class InputDataValidator {
                         + "' and '" + path2KeyAndValue[0] + "' are the same:"
                         + "\n'" + path1KeyAndValue[0] + "' = " + path1 + "\n'" + path2KeyAndValue[0] +  "' = " + path2
                         + "\n\nYou must specify different paths.");
-                System.exit(10);
+                System.exit(11);
             }
         } catch (IOException e) {
-            throw new RuntimeException("There was a problem while comparing paths provided in '"
+            throw new FileProcessingException("There was a problem while comparing paths provided in '"
                     + path1KeyAndValue[0] + "' and '" + path2KeyAndValue[0] + "'. ", e);
         }
     }
