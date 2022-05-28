@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Alphabet {
-    private static final List<Character> ALPHABET = Arrays.asList(
+    private static final List<Character> ALPHABET = List.of(
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
             'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л',
@@ -13,7 +13,6 @@ public class Alphabet {
             '.', ',', ':', ';', '!', '?', '"', '+', '-','=', '*', '/', '@',
             '$', '%', '&', '(', ')', '[', ']', '{', '}', '_', '\\', '\'', '#', '~', '¿', '¡', '№', ' '
     );
-
     public static List<Character> getInstance(){
         return ALPHABET;
     }

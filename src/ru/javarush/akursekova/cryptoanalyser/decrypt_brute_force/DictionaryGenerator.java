@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static ru.javarush.akursekova.cryptoanalyser.Main.TEXT_INTO_WORDS;
+
 public class DictionaryGenerator {
     public static Set<String> generateDictionary(String textToAnalysePath){
 
@@ -20,14 +22,14 @@ public class DictionaryGenerator {
 
             while (bufferedReader.ready()){
                 String stringToAnalyze = bufferedReader.readLine();
-                if (stringToAnalyze.equals("")){
+                if ("".equals(stringToAnalyze)){
                     continue;
                 }
-                String[] lineToStringArray = stringToAnalyze.split("[^A-Za-zА-Яа-я]+");
+                String[] lineToStringArray = stringToAnalyze.split(TEXT_INTO_WORDS);
 
                 for (int i = 0; i < lineToStringArray.length; i++) {
                     String wordToAnalyze  = lineToStringArray[i].toLowerCase();
-                    if (wordToAnalyze.equals("")){
+                    if ("".equals(wordToAnalyze)){
                         continue;
                     }
                     if (!wordsDictionary.contains(wordToAnalyze)){

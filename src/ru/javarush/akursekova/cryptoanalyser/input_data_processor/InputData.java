@@ -1,6 +1,7 @@
 package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
-public class InputDataParser {
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataValidator.Operation;
+public class InputData {
     private final String operation;
     private final String input;
     private final String output;
@@ -8,7 +9,7 @@ public class InputDataParser {
     private int shift;
 
 
-    public InputDataParser(String operation, String input, String output, int shift) {
+    public InputData(String operation, String input, String output, int shift) {
         this.operation = operation;
         this.input = input;
         this.output = output;
@@ -16,7 +17,7 @@ public class InputDataParser {
         exampleText = null;
     }
 
-    public InputDataParser(String operation, String input, String output, String exampleText) {
+    public InputData(String operation, String input, String output, String exampleText) {
         this.operation = operation;
         this.input = input;
         this.output = output;
@@ -47,14 +48,14 @@ public class InputDataParser {
         this.shift = shift;
     }
 
-    public static InputDataParser parser(String[] args){
-        InputDataParser inputDataParser;
+    public static InputData parser(String[] args){
+        InputData inputDataParser;
         String operation = args[0];
         String[] input = args[1].split("=");
         String[] output = args[2].split("=");
         String[] shiftValue = null;
         String[] textExample = null;
-        if ("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0])){
+        if (Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0])){
             shiftValue = args[3].split("=");
         } else {
             textExample = args[3].split("=");
@@ -66,12 +67,12 @@ public class InputDataParser {
         int shift;
         String textExamplePath;
 
-        if ("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0])){
+        if (Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0])){
             shift = Integer.parseInt(shiftValue[1]);
-            inputDataParser = new InputDataParser(operation, inputPath, outputPath, shift);
+            inputDataParser = new InputData(operation, inputPath, outputPath, shift);
         } else {
             textExamplePath = textExample[1];
-            inputDataParser = new InputDataParser(operation, inputPath, outputPath, textExamplePath);
+            inputDataParser = new InputData(operation, inputPath, outputPath, textExamplePath);
         }
 
         return inputDataParser;

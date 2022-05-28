@@ -1,7 +1,8 @@
 package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
-import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
+
+import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,11 +10,18 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
 public class InputDataValidator {
+
+    public enum Operation {
+        encrypt,
+        decryptWithShift,
+        decryptWithBruteForce,
+        decryptWithStatAnalysis
+    }
     public static void validateInputData(String[] args){
-        if (!"encrypt".equals(args[0])
-                && !"decryptWithShift".equals(args[0])
-                && !"decryptWithBruteForce".equals(args[0])
-                && !"decryptWithStatAnalysis".equals(args[0])
+        if (!Operation.encrypt.toString().equals(args[0])
+                && !Operation.decryptWithShift.toString().equals(args[0])
+                && !Operation.decryptWithBruteForce.toString().equals(args[0])
+                && !Operation.decryptWithStatAnalysis.toString().equals(args[0])
         ){
             System.err.println("Provided operation is invalid: " + args[0] + ".\n\n" +
                     "Please, specify one of the operations from the list below: \n" +
@@ -24,7 +32,7 @@ public class InputDataValidator {
             System.exit(1);
         }
 
-        if (("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0]))
+        if ((Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0]))
                 && (args.length != 4 || !args[1].startsWith("-input")
                 || !args[2].startsWith("-output") || !args[3].startsWith("-shift"))){
             System.err.println("Some of your parameters is missing! " +
@@ -33,7 +41,7 @@ public class InputDataValidator {
             System.exit(2);
         }
 
-        if (("decryptWithBruteForce".equals(args[0]) || "decryptWithStatAnalysis".equals(args[0]))
+        if ((Operation.decryptWithBruteForce.toString().equals(args[0]) || Operation.decryptWithStatAnalysis.toString().equals(args[0]))
                 && (args.length != 4 || !args[1].startsWith("-input")
                 || !args[2].startsWith("-output") || !args[3].startsWith("-textToAnalyse"))){
             System.err.println("Some of your parameters is missing! " +
@@ -43,7 +51,7 @@ public class InputDataValidator {
 
         validateArgFormat(args[1]);
         validateArgFormat(args[2]);
-        if ("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0])){
+        if (Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0])){
             validateArgFormat(args[3]);
         } else {
             validateArgFormat(args[3]);
@@ -52,7 +60,7 @@ public class InputDataValidator {
         validatePath(args[1]);
         validatePath(args[2]);
         isSameFile(args[1], args[2]);
-        if ("encrypt".equals(args[0]) || "decryptWithShift".equals(args[0])){
+        if (Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0])){
             validateShift(args[3]);
         } else {
             isSameFile(args[1], args[3]);
@@ -86,15 +94,15 @@ public class InputDataValidator {
         }
 
         int shift = Integer.parseInt(shiftValue[1]);
-        final int MAX_SHIFT = Alphabet.getInstance().size()-1;
-        if (shift == 0 || shift >= Alphabet.getInstance().size()){
+        final int MAX_SHIFT = ALPHABET.size()-1;
+        if (shift == 0 || shift >= ALPHABET.size()){
             System.err.println("Shift is invalid: " + shiftValue[1]
                     + ". \nPlease, provide shift value which will be in the range of [1, " + MAX_SHIFT + "].");
             System.exit(6);
         }
     }
 
-    public static void validatePath(String arg){
+    private static void validatePath(String arg){
         String[] pathKeyAndValue = arg.split("=");
         Path path;
 

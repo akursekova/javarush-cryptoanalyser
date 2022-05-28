@@ -1,15 +1,16 @@
 package ru.javarush.akursekova.cryptoanalyser.decrypt_brute_force;
 
-import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 import ru.javarush.akursekova.cryptoanalyser.decrypt_shift.DecryptShift;
-import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputData;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
+
 public class DecryptBruteForce {
-    public static void decryptByBruteForce(InputDataParser inputDataParser){
+    public static void decryptByBruteForce(InputData inputDataParser){
 
         String textToAnalyse = inputDataParser.getExampleText();
         String outputText = inputDataParser.getOutput();
@@ -23,7 +24,7 @@ public class DecryptBruteForce {
         int maxWordsInBothSets = Integer.MIN_VALUE;
 
 
-        for (int i = 1; i < Alphabet.getInstance().size(); i++) {
+        for (int i = 1; i < ALPHABET.size(); i++) {
             int shiftToTry = i;
 
             inputDataParser.setShift(shiftToTry);

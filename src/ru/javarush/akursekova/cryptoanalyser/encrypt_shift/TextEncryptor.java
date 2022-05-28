@@ -1,14 +1,15 @@
 package ru.javarush.akursekova.cryptoanalyser.encrypt_shift;
 
-import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
-import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataParser;
+import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputData;
 import java.io.*;
 import java.nio.charset.Charset;
 
+import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
+
 
 public class TextEncryptor {
-    public static void encryptText(InputDataParser inputDataParser){
+    public static void encryptText(InputData inputDataParser){
 
         String inputPath = inputDataParser.getInput();
         String outputPath = inputDataParser.getOutput();
@@ -27,17 +28,17 @@ public class TextEncryptor {
                         charBeforeEncrypt = Character.toLowerCase(charBeforeEncrypt);
                     }
 
-                    int indexCharToEncrypt = Alphabet.getInstance().indexOf(charBeforeEncrypt);
+                    int indexCharToEncrypt = ALPHABET.indexOf(charBeforeEncrypt);
                     if (indexCharToEncrypt == -1){
                         output.write(charBeforeEncrypt);
                         continue;
                     }
                     int indexWithShift = indexCharToEncrypt + shift;
-                    if (indexWithShift > Alphabet.getInstance().size() - 1){
-                        indexWithShift = indexWithShift - (Alphabet.getInstance().size() - 1) - 1;
+                    if (indexWithShift > ALPHABET.size() - 1){
+                        indexWithShift = indexWithShift - (ALPHABET.size() - 1) - 1;
                     }
 
-                    char charAfterEncrypt = Alphabet.getInstance().get(indexWithShift);
+                    char charAfterEncrypt = ALPHABET.get(indexWithShift);
                     output.write(charAfterEncrypt);
             }
         } catch (FileNotFoundException e) {

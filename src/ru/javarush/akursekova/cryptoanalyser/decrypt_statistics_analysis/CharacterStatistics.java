@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
+
 public class CharacterStatistics {
+    public static final int MAX_OF_SYMBOLS = 1000;
     public static Map<Character, Integer> generateCharStats(String textToAnalyse){
 
         Map<Character, Integer> charStatsMap = new HashMap<>();
@@ -20,14 +23,14 @@ public class CharacterStatistics {
             int readBytes;
 
 
-            while ((readBytes = input.read()) != -1 && totalBytesRead != 1000){
+            while ((readBytes = input.read()) != -1 && totalBytesRead != MAX_OF_SYMBOLS){
                 char charToAnalyse = (char) readBytes;
 
                 if (Character.isUpperCase(charToAnalyse)){
                     charToAnalyse = Character.toLowerCase(charToAnalyse);
                 }
 
-                if (!Alphabet.getInstance().contains(charToAnalyse)){
+                if (!ALPHABET.contains(charToAnalyse)){
                     continue;
                 }
                 if (!charStatsMap.containsKey(charToAnalyse)){
