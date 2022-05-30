@@ -1,6 +1,9 @@
 package ru.javarush.akursekova.cryptoanalyser.input_data_processor;
 
 import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataValidator.Operation;
+
+import static ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputDataValidator.ARGUMENT_SEPARATOR;
+
 public class InputData {
     private final String operation;
     private final String input;
@@ -51,14 +54,14 @@ public class InputData {
     public static InputData parser(String[] args){
         InputData inputDataParser;
         String operation = args[0];
-        String[] input = args[1].split("=");
-        String[] output = args[2].split("=");
+        String[] input = args[1].split(ARGUMENT_SEPARATOR);
+        String[] output = args[2].split(ARGUMENT_SEPARATOR);
         String[] shiftValue = null;
         String[] textExample = null;
         if (Operation.encrypt.toString().equals(args[0]) || Operation.decryptWithShift.toString().equals(args[0])){
-            shiftValue = args[3].split("=");
+            shiftValue = args[3].split(ARGUMENT_SEPARATOR);
         } else {
-            textExample = args[3].split("=");
+            textExample = args[3].split(ARGUMENT_SEPARATOR);
         }
 
 

@@ -5,8 +5,7 @@ import ru.javarush.akursekova.cryptoanalyser.input_data_processor.InputData;
 import java.io.*;
 import java.nio.charset.Charset;
 
-import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
-
+import static ru.javarush.akursekova.cryptoanalyser.Main.*;
 
 public class TextEncryptor {
     public static void encryptText(InputData inputDataParser){
@@ -42,9 +41,9 @@ public class TextEncryptor {
                     output.write(charAfterEncrypt);
             }
         } catch (FileNotFoundException e) {
-            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException(ERROR_FILE_NOT_FOUND, e);
         } catch (IOException e) {
-            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException(ERROR_INPUT_OUTPUT, e);
         }
     }
 }

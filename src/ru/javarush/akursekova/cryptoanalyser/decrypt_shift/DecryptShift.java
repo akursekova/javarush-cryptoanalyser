@@ -7,7 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
+import static ru.javarush.akursekova.cryptoanalyser.Main.*;
+
 public class DecryptShift {
     public static void decryptText(InputData inputDataParser) {
 
@@ -44,9 +45,9 @@ public class DecryptShift {
                 output.write(charAfterDecrypt);
             }
         } catch (FileNotFoundException e) {
-            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException(ERROR_FILE_NOT_FOUND, e);
         } catch (IOException e) {
-            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException(ERROR_INPUT_OUTPUT, e);
         }
     }
 }

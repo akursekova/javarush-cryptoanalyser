@@ -1,6 +1,5 @@
 package ru.javarush.akursekova.cryptoanalyser.alphabet;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Alphabet {

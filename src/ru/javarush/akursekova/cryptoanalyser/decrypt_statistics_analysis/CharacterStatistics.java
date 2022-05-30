@@ -1,6 +1,5 @@
 package ru.javarush.akursekova.cryptoanalyser.decrypt_statistics_analysis;
 
-import ru.javarush.akursekova.cryptoanalyser.alphabet.Alphabet;
 import ru.javarush.akursekova.cryptoanalyser.exception.FileProcessingException;
 
 import java.io.FileNotFoundException;
@@ -9,9 +8,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.javarush.akursekova.cryptoanalyser.Main.ALPHABET;
+import static ru.javarush.akursekova.cryptoanalyser.Main.*;
 
 public class CharacterStatistics {
+
     public static final int MAX_OF_SYMBOLS = 1000;
     public static Map<Character, Integer> generateCharStats(String textToAnalyse){
 
@@ -43,9 +43,9 @@ public class CharacterStatistics {
                 totalBytesRead++;
             }
         } catch (FileNotFoundException e) {
-            throw new FileProcessingException("There was a problem while trying to access a file which is not available.", e);
+            throw new FileProcessingException(ERROR_FILE_NOT_FOUND, e);
         } catch (IOException e) {
-            throw new FileProcessingException("There was a problem while working with Input/Output operations", e);
+            throw new FileProcessingException(ERROR_INPUT_OUTPUT, e);
         }
 
         for(Map.Entry<Character, Integer> entry: charStatsMap.entrySet()) {
