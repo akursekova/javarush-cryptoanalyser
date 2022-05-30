@@ -22,7 +22,6 @@ public class CharacterStatistics {
         try(FileReader input = new FileReader(textToAnalyse)) {
             int readBytes;
 
-
             while ((readBytes = input.read()) != -1 && totalBytesRead != MAX_OF_SYMBOLS){
                 char charToAnalyse = (char) readBytes;
 

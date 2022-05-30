@@ -23,7 +23,6 @@ public class InputDataValidator{
     private static final String EXPECTED_FILE_EXTENSION = ".txt";
     static final String ARGUMENT_SEPARATOR = "=";
 
-
     private static final String INVALID_OPERATION = "Provided operation is invalid: %s " +
             "\n\nPlease, specify one of the operations from the list below: \n" +
             "'encrypt' for text encryption\n" +
@@ -35,13 +34,10 @@ public class InputDataValidator{
             "and parameter '-shift' with some rotation.";
     private static final String MISSING_PARAMETER_PATHS = "Some of your parameters is missing! " +
             "\nYou must specify parameters '-input','-output' and '-textToAnalyse' with a path.";
-
     private static final String INVALID_PARAMETER_FORMAT = "You must specify parameter '%s' with next format: %s={value}";
-
     private static final String NON_INTEGER_SHIFT = "Shift is invalid: %s. \nPlease, provide integer value.";
     private static final String OUT_OF_RANGE_SHIFT = "Shift is invalid: %s. " +
             "\nPlease, provide shift value which will be in the range of [1, %d].";
-
     private static final String INVALID_PATH = "Path specified in '%s' is invalid: %s";
     private static final String PATH_IS_DIRECTORY = "Path specified in '%s': %s is directory! " +
             "\nYou must specify a file path.";
@@ -53,7 +49,6 @@ public class InputDataValidator{
             "\nYou must specify a path to the file which is not empty in '%s'.";
     private static final String PROBLEM_WITH_PROCESS_FILE = "There was a problem " +
             "while processing size of the file provided in '%s'.";
-
     private static final String SAME_PATHS = "Paths you provided in '%s' and '%s' are the same:"
             + "\n'%s' = %s \n'%s' = %s\n\nYou must specify different paths.";
     private static final String PROBLEM_TO_COMPARE_PATHS = "There was a problem " +

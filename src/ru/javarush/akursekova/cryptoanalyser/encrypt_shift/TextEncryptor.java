@@ -14,11 +14,9 @@ public class TextEncryptor {
         String outputPath = inputDataParser.getOutput();
         int shift = inputDataParser.getShift();
 
-
         try(FileReader input = new FileReader(inputPath, Charset.defaultCharset());
             FileWriter output = new FileWriter(outputPath, Charset.defaultCharset())
         ) {
-
             int readBytes;
 
             while ((readBytes = input.read()) != -1){
@@ -26,7 +24,6 @@ public class TextEncryptor {
                 if (Character.isUpperCase(charBeforeEncrypt)){
                         charBeforeEncrypt = Character.toLowerCase(charBeforeEncrypt);
                     }
-
                     int indexCharToEncrypt = ALPHABET.indexOf(charBeforeEncrypt);
                     if (indexCharToEncrypt == -1){
                         output.write(charBeforeEncrypt);
@@ -36,7 +33,6 @@ public class TextEncryptor {
                     if (indexWithShift > ALPHABET.size() - 1){
                         indexWithShift = indexWithShift - (ALPHABET.size() - 1) - 1;
                     }
-
                     char charAfterEncrypt = ALPHABET.get(indexWithShift);
                     output.write(charAfterEncrypt);
             }

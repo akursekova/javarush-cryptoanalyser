@@ -64,7 +64,6 @@ public class InputData {
             textExample = args[3].split(ARGUMENT_SEPARATOR);
         }
 
-
         String inputPath = input[1];
         String outputPath = output[1];
         int shift;

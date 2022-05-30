@@ -20,12 +20,9 @@ public class DecryptShift {
         try (FileReader input = new FileReader(inputPath);
              FileWriter output = new FileWriter(outputPath)
         ) {
-
             int readBytes;
 
             while ((readBytes = input.read()) != -1) {
-
-
                 char charBeforeDecrypt = (char) readBytes;
                 if (Character.isUpperCase(charBeforeDecrypt)) {
                     charBeforeDecrypt = Character.toLowerCase(charBeforeDecrypt);
